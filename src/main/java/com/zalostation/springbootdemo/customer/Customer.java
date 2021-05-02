@@ -1,10 +1,17 @@
 package com.zalostation.springbootdemo.customer;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Customer {
-    private final Long id;
-    private final String name;
-    private final String password;
-    private final String email;
+    @Id
+    private Long id;
+    private String name;
+    private String password;
+    private String email;
 
     public Customer(Long id, String name, String password, String email) {
         this.id = id;
@@ -12,6 +19,8 @@ public class Customer {
         this.password = password;
         this.email = email;
     }
+
+    public Customer() {}
 
     public Long getId() {
         return id;
@@ -27,5 +36,21 @@ public class Customer {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,22 +12,30 @@ import java.util.List;
 @RequestMapping("api/v1/customers")
 public class CustomerController {
 
-    private Object Customer;
+    private final CustomerService customerService;
+
+    public CustomerController(CustomerService customerService) {
+        this.customerService = customerService;
+    }
 
     @GetMapping
     public List<Customer> getCustomers() {
-        var customers = Arrays.asList(
-                new Customer(1L, "Customer 1", "password", "customer1@mail.com"),
-                new Customer(2L, "Customer 2", "password", "customer2@mail.com"));
+//        var customers = Arrays.asList(
+//                new Customer(1L, "Customer 1", "password", "customer1@mail.com"),
+//                new Customer(2L, "Customer 2", "password", "customer2@mail.com"));
+//
+//        return customers;
 
-        return customers;
+        return customerService.getCustomer();
     }
 
     @GetMapping("{customer_id}")
     public Customer getCustomer(@PathVariable("customer_id") Long id) {
-        return getCustomers().stream()
-                .filter(customer -> customer.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("Customer was not found with id " + id));
+//        return getCustomers().stream()
+//                .filter(customer -> customer.getId() == id)
+//                .findFirst()
+//                .orElseThrow(() -> new IllegalStateException("Customer was not found with id " + id));
+
+        return customerService.getCustomer(id);
     }
 }
