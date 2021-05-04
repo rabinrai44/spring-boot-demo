@@ -1,11 +1,8 @@
 package com.zalostation.springbootdemo.customer;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -20,22 +17,41 @@ public class CustomerController {
 
     @GetMapping
     public List<Customer> getCustomers() {
-//        var customers = Arrays.asList(
-//                new Customer(1L, "Customer 1", "password", "customer1@mail.com"),
-//                new Customer(2L, "Customer 2", "password", "customer2@mail.com"));
-//
-//        return customers;
-
         return customerService.getCustomer();
     }
 
-    @GetMapping("{customer_id}")
-    public Customer getCustomer(@PathVariable("customer_id") Long id) {
-//        return getCustomers().stream()
-//                .filter(customer -> customer.getId() == id)
-//                .findFirst()
-//                .orElseThrow(() -> new IllegalStateException("Customer was not found with id " + id));
-
+    @GetMapping("{customerId}")
+    public Customer getCustomer(@PathVariable("customerId") Long id) {
         return customerService.getCustomer(id);
+    }
+
+    @PostMapping()
+    public Customer addNewCustomer(@Valid @RequestBody Customer customer) {
+        return customerService.addCustomer(customer);
+    }
+
+    /**
+     * Update customer
+     *
+     * @param customer object
+     * @return customer object
+     */
+    @PutMapping
+    public Customer updateCustomer(@Valid @RequestBody Customer customer) {
+        Customer customer1 = customerService.getCustomer(customer.getId());
+        if (customer1 == null) new IllegalStateException("");
+
+        customer1.setEmail(customer.getEmail());
+        customer1.setId(customer.getId());
+        customer1.setName(customer.getName());
+        customer1.setPassword(customer.getPassword());
+        return customerService.updateCustomer(customer1);
+    }
+
+    @DeleteMapping("{customerId}")
+    public void deleteCustomer(@PathVariable("customerId") Long id) {
+        var customer = customerService.getCustomer(id);
+        if (customer == null) new IllegalStateException("Customer id " + id + " is not valid");
+        customerService.deleteCustomer(customer);
     }
 }
