@@ -1,5 +1,6 @@
 package com.zalostation.springbootdemo.customer;
 
+import com.zalostation.springbootdemo.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class CustomerService {
     public Customer getCustomer(Long id) {
         return customerRepository
                 .findById(id)
-                .orElseThrow(() -> new IllegalStateException("Customer was not found with id " + id));
+                .orElseThrow(() -> new NotFoundException("Customer with id '" + id + "' was not found"));
     }
 
 

@@ -1,5 +1,6 @@
 package com.zalostation.springbootdemo.customer;
 
+import com.zalostation.springbootdemo.exception.ApiRequestException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -51,7 +52,7 @@ public class CustomerController {
     @DeleteMapping("{customerId}")
     public void deleteCustomer(@PathVariable("customerId") Long id) {
         var customer = customerService.getCustomer(id);
-        if (customer == null) new IllegalStateException("Customer id " + id + " is not valid");
+        if (customer == null) throw new ApiRequestException("Customer id " + id + " is not valid");
         customerService.deleteCustomer(customer);
     }
 }
