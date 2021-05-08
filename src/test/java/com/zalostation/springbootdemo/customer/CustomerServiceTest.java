@@ -36,7 +36,7 @@ class CustomerServiceTest {
 //        customerRepository.saveAll(Arrays.asList(karen, alex, matt));
 
         // when
-        var customers = underTest.getCustomer();
+        var customers = underTest.getCustomers();
 
         // then
         assertEquals(1000, customers.size());

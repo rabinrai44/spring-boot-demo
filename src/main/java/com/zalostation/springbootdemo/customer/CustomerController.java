@@ -1,6 +1,7 @@
 package com.zalostation.springbootdemo.customer;
 
 import com.zalostation.springbootdemo.exception.ApiRequestException;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -8,17 +9,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/customers")
+@AllArgsConstructor
 public class CustomerController {
 
     private final CustomerService customerService;
 
-    public CustomerController(CustomerService customerService) {
-        this.customerService = customerService;
-    }
-
     @GetMapping
     public List<Customer> getCustomers() {
-        return customerService.getCustomer();
+        return customerService.getCustomers();
     }
 
     @GetMapping("{customerId}")
